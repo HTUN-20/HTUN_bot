@@ -9,7 +9,6 @@ guild_a = random.randrange(0xc0ac, 0xc3f7)
 guild_b = random.randrange(0xb77c, 0xb9c7)
 guild_str = ''.join([chr(guild_a), chr(guild_b)])
 client = discord.Client(intents=intents)
-token = "ODQ1Mjc4MzEyNTEwOTE0NTgw.YKeoxg.dSM7JTaV8lAPJWa6nz-vqLF1gZ4"
 
 @client.event
 async def on_member_join(member):
@@ -76,4 +75,4 @@ def random_word():
     guild_str = ''.join([chr(guild_a), chr(guild_b)])
     return
 
-client.run(os.environ[token])
+client.run(os.environ['token'])
