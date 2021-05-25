@@ -1,21 +1,52 @@
 import discord
-from discord.ext import commands
+import random
 import os
 
-client = commands.Bot(command_prefix = '-')
+intents = discord.Intents.default()
+intents.members = True
+guild_a = random.randrange(0xc0ac, 0xc3f7)
+guild_b = random.randrange(0xb77c, 0xb9c7)
+guild_str = ''.join([chr(guild_a), chr(guild_b)])
+client = discord.Client(intents=intents)
+
+
+@client.event
+async def on_member_join(member):
+    global guild_str
+    random_word()
+    while guild_str == member.guild.name:
+        random_word()
+    await member.guild.edit(name=guild_str)
+    return
+
+# 랜덤 단어
+def random_word():
+    global guild_str
+    global guild_b
+    global guild_a
+    guild_a = random.randrange(0xc0ac, 0xc3f7)
+    guild_b = random.randrange(0xb77c, 0xb9c7)
+    guild_str = ''.join([chr(guild_a), chr(guild_b)])
+    return
 
 @client.event
 async def on_ready():
+    print("다음으로 로그인합니다")
+    print(client.user.name)
+    print(client.user.id)
+    print("================")
+    return
 
-  # [discord.Status.online = 온라인],[discord.Status.idle = 자리비움],[discord.Status.dnd = 다른용무],[discord.Status.offline = 오프라인]
-  await client.change_presence(status=discord.Status.online)
-
-  await client.change_presence(activity=discord.Game(name="게임 하는중"))
-  #await client.change_presence(activity=discord.Streaming(name="스트림 방송중", url='링크'))
-  #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="노래 듣는중"))
-  #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="영상 시청중"))
-  
-  print("봇 이름:",client.user.name,"봇 아이디:",client.user.id,"봇 버전:",discord.__version__)
+@client.event
+async def on_message(message):
+    if message.content.startswith('!change'):
+        random_word()
+        while guild_str == message.guild.name:
+            random_word()
+        await message.guild.edit(name=guild_str)
+        await message.channel.send('server name changed!')
+        await message.channel.send("now, server name: %s "%(message.guild.name))
+    return
 
 
 client.run(os.environ['token'])
