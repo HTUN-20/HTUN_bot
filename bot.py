@@ -4,9 +4,9 @@ import os
 
 intents = discord.Intents.default()
 intents.members = True
-guild_a = random.randrange(0xc0ac, 0xc3f7)
-guild_b = random.randrange(0xb77c, 0xb9c7)
-guild_str = ''.join([chr(guild_a), chr(guild_b)])
+guild_a = 0
+guild_b = 0
+guild_str = 0
 client = discord.Client(intents=intents)
 
 
@@ -26,6 +26,8 @@ def random_word():
     global guild_a
     guild_a = random.randrange(0xc0ac, 0xc3f7)
     guild_b = random.randrange(0xb77c, 0xb9c7)
+    guild_a %= 0x1c
+    guild_b %= 0x1c
     guild_str = ''.join([chr(guild_a), chr(guild_b)])
     return
 
