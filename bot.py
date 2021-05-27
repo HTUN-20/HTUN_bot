@@ -24,8 +24,8 @@ def random_word():
     global guild_str
     global guild_b
     global guild_a
-    guild_a = random.randrange(0xc0ac, 0xc3f7)
-    guild_b = random.randrange(0xb77c, 0xb9c7)
+    guild_a = random.randrange(0xac00, 0xd7a3)
+    guild_b = random.randrange(0xac00, 0xd7a3)
     guild_str = ''.join([chr(guild_a), chr(guild_b)])
     return
 
